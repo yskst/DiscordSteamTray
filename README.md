@@ -1,6 +1,6 @@
 # Discord Steam Tray
 
-Windows の通知領域に Discord と Steam のステータスを表示する .NET 8 WinForms アプリです。メインフォームは表示せず、Discord は Bot Gateway、Steam は Web API で監視します。
+Windows の通知領域に Discord と Steam のステータスを表示する .NET 10 WinForms アプリです。メインフォームは表示せず、Discord は Bot Gateway、Steam は Web API で監視します。
 
 このプロジェクトのライセンスは [MIT License](./LICENSE) です。
 
@@ -12,7 +12,7 @@ EXE は[公式 GitHub Releases](https://github.com/yskst/DiscordSteamTray/releas
 
 ## 事前準備
 
-1. .NET 8 SDK をインストールします。
+1. ソースからビルドまたは実行する場合は .NET 10 SDK をインストールします。
 2. Discord Developer Portal で Bot を作成し、**Presence Intent** と **Server Members Intent** を有効にします。**OAuth2 → URL Generator** で `bot` スコープを選び、生成された URL から対象 Guild に Bot を招待してください（操作アカウントに Manage Server 権限が必要です）。Bot Token、Guild ID、監視対象 User ID を用意してください。
 3. Steam Web API Key と対象アカウントの SteamID64 を用意します。対象 Steam プロフィールは API から参照できる公開状態にしてください。
 4. アプリを起動し、設定画面の「How to find these values」をクリックすると取得手順が表示されます。公式ページへのリンクも設定画面にあります。Steam API Key の Domain Name には、このローカルアプリ用に `localhost` を入力します。ブラウザーのログイン情報やトークンをアプリが自動取得することはありません。設定は Windows DPAPI（現在の Windows ユーザー）で暗号化し、`%LOCALAPPDATA%\DiscordSteamTray\settings.dat` に保存します。秘密情報を平文ファイルや Git に保存する必要はありません。
@@ -33,7 +33,7 @@ Release ビルド:
 dotnet build .\DiscordSteamTray.csproj -c Release
 ```
 
-出力先: `bin\Release\net8.0-windows\DiscordSteamTray.exe`
+出力先: `bin\Release\net10.0-windows\DiscordSteamTray.exe`
 
 Windows x64 向け自己完結型の単一実行ファイルを発行:
 
@@ -66,6 +66,6 @@ Discord Bot Token と Steam API Key は Windows ユーザーごとに暗号化�
 
 ## トラブルシューティング
 
-`dotnet run` 実行時に `No .NET SDKs were found` と表示される場合、.NET ランタイムのみがインストールされ、SDK がありません。開発実行する場合は **.NET 8 SDK (Windows x64)** をインストールし、新しいターミナルで `dotnet --list-sdks` を実行して `8.0.xxx` が表示されることを確認してから、上記の `dotnet run` を実行してください。
+`dotnet run` 実行時に `No .NET SDKs were found` と表示される場合、.NET ランタイムのみがインストールされ、SDK がありません。開発実行する場合は **.NET 10 SDK (Windows x64)** をインストールし、新しいターミナルで `dotnet --list-sdks` を実行して `10.0.xxx` が表示されることを確認してから、上記の `dotnet run` を実行してください。
 
 発行済みアプリを使う場合は、SDK や `dotnet run` は不要です。`publish\DiscordSteamTray.exe` を直接起動してください。この EXE は自己完結型です。

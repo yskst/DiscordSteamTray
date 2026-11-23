@@ -2,7 +2,7 @@
 
 ## Project
 
-- This is a Windows notification-area application built with C# and .NET 8 (`net8.0-windows`).
+- This is a Windows notification-area application built with C# and .NET 10 (`net10.0-windows`).
 - It uses WinForms `ApplicationContext` and `NotifyIcon`; do not add a visible main window.
 - Keep changes focused and preserve the existing tray-based UX.
 
