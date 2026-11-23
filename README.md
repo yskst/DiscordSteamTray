@@ -19,6 +19,14 @@ Bot は対象ユーザーが参加している Guild に所属している必要
 dotnet run --project .\DiscordSteamTray.csproj
 ```
 
+Release ビルド:
+
+```powershell
+dotnet build .\DiscordSteamTray.csproj -c Release
+```
+
+出力先: `bin\Release\net8.0-windows\DiscordSteamTray.exe`
+
 Windows x64 向け自己完結型の単一実行ファイルを発行:
 
 ```powershell

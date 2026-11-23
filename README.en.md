@@ -21,6 +21,14 @@ Run from source:
 dotnet run --project .\DiscordSteamTray.csproj
 ```
 
+Build the Release configuration:
+
+```powershell
+dotnet build .\DiscordSteamTray.csproj -c Release
+```
+
+Output: `bin\Release\net8.0-windows\DiscordSteamTray.exe`
+
 Publish a self-contained, single-file Windows x64 executable:
 
 ```powershell
