@@ -1,0 +1,36 @@
+name: Windows Build
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    runs-on: windows-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Publish self-contained Windows executable
+        run: dotnet publish .\DiscordSteamTray.csproj -c Release -r win-x64 --self-contained true /p:PublishSingleFile=true /p:IncludeNativeLibrariesForSelfExtract=true /p:DebugType=None -o .\publish
+
+      - name: Upload executable artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: DiscordSteamTray-win-x64
+          path: publish/DiscordSteamTray.exe
+          if-no-files-found: error
+          retention-days: 14

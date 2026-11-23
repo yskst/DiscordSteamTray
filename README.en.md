@@ -37,6 +37,8 @@ dotnet publish .\DiscordSteamTray.csproj -c Release -r win-x64 --self-contained 
 
 Run `publish\DiscordSteamTray.exe` directly. The published executable is self-contained and does not require the .NET SDK. Use the tray icon's context menu to refresh statuses, open settings, or exit. Saving changed settings restarts the app to apply them.
 
+GitHub Actions publishes the Windows x64 executable on pushes to `main`, pull requests targeting `main`, and manual runs from the Actions tab. After a successful run, download `DiscordSteamTray-win-x64` from the run's Artifacts section.
+
 ## Troubleshooting
 
 If `dotnet run` reports `No .NET SDKs were found`, install the **.NET 8 SDK for Windows x64** (the runtime alone is not sufficient). Open a new terminal and verify that `dotnet --list-sdks` lists an `8.0.xxx` SDK before running the command again. If you are using the published application, launch `publish\DiscordSteamTray.exe` directly instead of using `dotnet run`.

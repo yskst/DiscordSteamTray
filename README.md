@@ -35,6 +35,8 @@ dotnet publish .\DiscordSteamTray.csproj -c Release -r win-x64 --self-contained 
 
 `publish` 内の `DiscordSteamTray.exe` を実行してください。初回起動時に設定画面が表示されます。以降はトレイアイコンを右クリックして「設定...」から変更できます。設定変更後はアプリが再起動して新しい値を適用します。「今すぐ更新」で両サービスを再取得し、「終了」で接続を閉じて終了します。
 
+GitHub Actions は `main` への push、`main` 向け Pull Request、または Actions タブからの手動実行で Windows x64 版を発行します。完了後、実行結果の Artifacts から `DiscordSteamTray-win-x64` をダウンロードできます。
+
 Discord Bot Token と Steam API Key は Windows ユーザーごとに暗号化して保存します。同じ Windows ユーザーでログインしてアプリを実行してください。
 
 ## トラブルシューティング
