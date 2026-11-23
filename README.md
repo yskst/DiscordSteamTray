@@ -4,6 +4,12 @@ Windows の通知領域に Discord と Steam のステータスを表示する .
 
 このプロジェクトのライセンスは [MIT License](./LICENSE) です。
 
+## 重要: 初回起動時の Windows SmartScreen 警告
+
+配布している EXE はコード署名されていないため、初回実行時に「Windows によって PC が保護されました」と表示されることがあります。これは Windows Defender SmartScreen が発行元を確認できない場合の警告です。
+
+EXE は[公式 GitHub Releases](https://github.com/yskst/DiscordSteamTray/releases)から入手してください。警告画面で「詳細情報」を選び、ファイル名を確認したうえで、入手元を信頼できる場合に限り「実行」を選択します。入手元を確認できない場合やウイルス対策ソフトが脅威を検出した場合は実行せず、保護機能も無効にしないでください。
+
 ## 事前準備
 
 1. .NET 8 SDK をインストールします。

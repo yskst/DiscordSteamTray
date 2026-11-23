@@ -4,6 +4,12 @@ A .NET 8 Windows Forms application that displays Discord and Steam presence in t
 
 This project is licensed under the [MIT License](./LICENSE).
 
+## Important: Windows SmartScreen warning on first launch
+
+The distributed executable is not code-signed, so Windows may show **"Windows protected your PC"** the first time you run it. This warning means Windows Defender SmartScreen could not verify the publisher.
+
+Download the executable from the [official GitHub Releases](https://github.com/yskst/DiscordSteamTray/releases). On the warning screen, select **More info**, verify the file name, and select **Run** only if you trust the source. Do not run it or disable security protections if you cannot verify its source or antivirus software detects a threat.
+
 ## Prerequisites and setup
 
 1. Install the .NET 8 SDK if you intend to build or run the project from source.
