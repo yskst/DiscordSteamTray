@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Net.Http;
 using System.Net.Sockets;
 using System.Runtime.InteropServices;
@@ -372,14 +373,26 @@ internal sealed class TrayApplicationContext : ApplicationContext
 
     private static Icon CreateStatusIcon(DrawingColor discordColor, DrawingColor steamColor)
     {
-        using var bitmap = new Bitmap(32, 32);
+        using var bitmap = new Bitmap(32, 32, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
         using (Graphics graphics = Graphics.FromImage(bitmap))
         {
+            graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
             graphics.Clear(DrawingColor.Transparent);
-            using var discordBrush = new SolidBrush(discordColor);
-            using var steamBrush = new SolidBrush(steamColor);
-            graphics.FillRectangle(discordBrush, 0, 0, 16, 32);
-            graphics.FillRectangle(steamBrush, 16, 0, 16, 32);
+
+            var tileBounds = new RectangleF(1, 1, 30, 30);
+            using GraphicsPath tilePath = CreateRoundedRectanglePath(tileBounds, 7);
+            using var tileBrush = new LinearGradientBrush(
+                tileBounds,
+                DrawingColor.FromArgb(42, 49, 66),
+                DrawingColor.FromArgb(17, 21, 31),
+                LinearGradientMode.Vertical);
+            using var tileOutline = new Pen(DrawingColor.FromArgb(210, 146, 158, 180), 1);
+            graphics.FillPath(tileBrush, tilePath);
+            graphics.DrawPath(tileOutline, tilePath);
+
+            DrawStatusPanel(graphics, new RectangleF(4, 4, 10.5f, 24), discordColor);
+            DrawStatusPanel(graphics, new RectangleF(17.5f, 4, 10.5f, 24), steamColor);
         }
 
         IntPtr iconHandle = bitmap.GetHicon();
@@ -392,6 +405,39 @@ internal sealed class TrayApplicationContext : ApplicationContext
         {
             DestroyIcon(iconHandle);
         }
+    }
+
+    private static void DrawStatusPanel(Graphics graphics, RectangleF bounds, DrawingColor statusColor)
+    {
+        using GraphicsPath panelPath = CreateRoundedRectanglePath(bounds, 4);
+        using var panelBrush = new LinearGradientBrush(
+            bounds,
+            ControlPaint.Light(statusColor, 0.25f),
+            ControlPaint.Dark(statusColor, 0.2f),
+            LinearGradientMode.Vertical);
+        using var panelOutline = new Pen(DrawingColor.FromArgb(190, 255, 255, 255), 0.75f);
+        using var indicatorBrush = new SolidBrush(DrawingColor.FromArgb(245, 255, 255, 255));
+
+        graphics.FillPath(panelBrush, panelPath);
+        graphics.DrawPath(panelOutline, panelPath);
+        graphics.FillEllipse(
+            indicatorBrush,
+            bounds.X + (bounds.Width - 3.5f) / 2,
+            bounds.Y + (bounds.Height - 3.5f) / 2,
+            3.5f,
+            3.5f);
+    }
+
+    private static GraphicsPath CreateRoundedRectanglePath(RectangleF bounds, float radius)
+    {
+        float diameter = radius * 2;
+        var path = new GraphicsPath();
+        path.AddArc(bounds.X, bounds.Y, diameter, diameter, 180, 90);
+        path.AddArc(bounds.Right - diameter, bounds.Y, diameter, diameter, 270, 90);
+        path.AddArc(bounds.Right - diameter, bounds.Bottom - diameter, diameter, diameter, 0, 90);
+        path.AddArc(bounds.X, bounds.Bottom - diameter, diameter, diameter, 90, 90);
+        path.CloseFigure();
+        return path;
     }
 
     private static DrawingColor GetDiscordColor(UserStatus status) => status switch
