@@ -4,9 +4,14 @@ Notable changes for each release are recorded here. Release headings use the ver
 
 ## [Unreleased]
 
-### Changed
+## [2.0.0] - 2026-11-24
+
+### Added
 
 - Add the MIT License.
+
+### Removed
+
 - Drop .NET 8 support and target .NET 10 only.
 
 ## [1.0.0] - 2026-11-23
