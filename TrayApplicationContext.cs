@@ -78,6 +78,7 @@ internal sealed class TrayApplicationContext : ApplicationContext
         try
         {
             SettingsStore.Save(settingsForm.Settings);
+            StartupManager.SetEnabled(settingsForm.Settings.StartWithWindows);
             string executablePath = Environment.ProcessPath
                 ?? throw new InvalidOperationException("Could not determine the application executable path.");
             Process? restartedProcess = Process.Start(new ProcessStartInfo
@@ -93,12 +94,13 @@ internal sealed class TrayApplicationContext : ApplicationContext
         catch (Exception exception) when (exception is InvalidOperationException or
                                            IOException or
                                            UnauthorizedAccessException or
+                                           System.Security.SecurityException or
                                            System.Security.Cryptography.CryptographicException or
                                            System.ComponentModel.Win32Exception)
         {
             Trace.TraceError("Unable to save settings or restart application: {0}", exception);
             MessageBox.Show(
-                $"Could not restart the application to apply settings.\n{exception.Message}",
+                $"Could not apply settings or restart the application.\n{exception.Message}",
                 "Discord Steam Tray - Settings Error",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Error);

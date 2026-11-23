@@ -12,6 +12,7 @@
 - `TrayApplicationContext.cs` owns the tray icon, Discord.Net client, Steam polling loop, and service shutdown.
 - `SettingsForm.cs` and `SettingsHelpForm.cs` provide the settings UI and setup instructions.
 - `SettingsStore.cs` protects settings with Windows DPAPI for the current user. `TraySettings.cs` validates values.
+- `StartupManager.cs` toggles per-user Windows logon startup through the current user's Run registry key.
 - `.github/workflows/windows-build.yml` builds the self-contained Windows x64 executable and creates releases for version tags.
 
 ## Security and assets
@@ -26,6 +27,7 @@
 
 - Keep all C# user-facing strings, errors, and logs in English.
 - Follow existing nullable reference type, async, and resource-disposal patterns.
+- Keep Windows startup registration scoped to the current user; do not require administrator privileges.
 - Surface actionable errors; avoid broad catches and silent fallbacks.
 - Keep status color mapping and left/right service identity intact when changing the tray icon.
 

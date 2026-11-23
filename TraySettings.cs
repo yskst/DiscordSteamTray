@@ -5,21 +5,24 @@ internal sealed record TraySettings(
     ulong DiscordGuildId,
     ulong DiscordUserId,
     string SteamApiKey,
-    ulong SteamId64)
+    ulong SteamId64,
+    bool StartWithWindows)
 {
     public static TraySettings Create(
         string discordBotToken,
         string discordGuildId,
         string discordUserId,
         string steamApiKey,
-        string steamId64)
+        string steamId64,
+        bool startWithWindows)
     {
         return new TraySettings(
             Required(discordBotToken, "Discord Bot Token"),
             ParseId(discordGuildId, "Discord Guild ID"),
             ParseId(discordUserId, "Target Discord User ID"),
             Required(steamApiKey, "Steam Web API Key"),
-            ParseId(steamId64, "SteamID64"));
+            ParseId(steamId64, "SteamID64"),
+            startWithWindows);
     }
 
     private static string Required(string value, string displayName)

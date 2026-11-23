@@ -37,7 +37,8 @@ internal static class SettingsStore
             storedSettings.DiscordGuildId.ToString(),
             storedSettings.DiscordUserId.ToString(),
             storedSettings.SteamApiKey,
-            storedSettings.SteamId64.ToString());
+            storedSettings.SteamId64.ToString(),
+            storedSettings.StartWithWindows);
     }
 
     public static void Save(TraySettings settings)

@@ -4,8 +4,11 @@ Notable changes for each release are recorded here. Release headings use the ver
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-11-23
+
 ### Added
 
-- Tray application for Discord and Steam presence monitoring.
-- DPAPI-protected settings UI, generated status icon, and Windows x64 single-file publishing.
-- GitHub Actions build and tag-triggered release workflow.
+- Tray application for Discord bot presence and Steam Web API status monitoring.
+- Settings UI with DPAPI-protected credentials and per-user Windows sign-in startup.
+- Dynamically generated status icon and self-contained Windows x64 single-file executable.
+- GitHub Actions build and tag-triggered release workflow with the executable attached.

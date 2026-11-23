@@ -1,4 +1,6 @@
 using DiscordSteamTray;
+using System.ComponentModel;
+using System.Security;
 using System.Security.Cryptography;
 using System.Text.Json;
 
@@ -22,6 +24,23 @@ internal static class Program
 
                 settings = settingsForm.Settings;
                 SettingsStore.Save(settings);
+            }
+
+            try
+            {
+                StartupManager.SetEnabled(settings.StartWithWindows);
+            }
+            catch (Exception exception) when (exception is InvalidOperationException or
+                                               IOException or
+                                               UnauthorizedAccessException or
+                                               SecurityException or
+                                               Win32Exception)
+            {
+                MessageBox.Show(
+                    $"Could not update the Windows startup setting.\n{exception.Message}",
+                    "Discord Steam Tray - Startup Setting Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
             }
 
             SynchronizationContext.SetSynchronizationContext(new WindowsFormsSynchronizationContext());

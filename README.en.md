@@ -35,7 +35,7 @@ Publish a self-contained, single-file Windows x64 executable:
 dotnet publish .\DiscordSteamTray.csproj -c Release -r win-x64 --self-contained true /p:PublishSingleFile=true /p:IncludeNativeLibrariesForSelfExtract=true /p:DebugType=None -o .\publish
 ```
 
-Run `publish\DiscordSteamTray.exe` directly. The published executable is self-contained and does not require the .NET SDK. Use the tray icon's context menu to refresh statuses, open settings, or exit. Saving changed settings restarts the app to apply them.
+Run `publish\DiscordSteamTray.exe` directly. The published executable is self-contained and does not require the .NET SDK. Use the tray icon's context menu to refresh statuses, open settings, or exit. Saving changed settings restarts the app to apply them. Enable **Start automatically when I sign in to Windows** in settings to launch it at sign-in for the current Windows user; administrator privileges are not required.
 
 GitHub Actions publishes the Windows x64 executable on pushes to `main`, pull requests targeting `main`, and manual runs from the Actions tab. After a successful run, download `DiscordSteamTray-win-x64` from the run's Artifacts section.
 

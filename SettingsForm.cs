@@ -10,6 +10,11 @@ internal sealed class SettingsForm : Form
     private readonly TextBox _userId = new();
     private readonly TextBox _steamApiKey = new() { UseSystemPasswordChar = true };
     private readonly TextBox _steamId64 = new();
+    private readonly CheckBox _startWithWindows = new()
+    {
+        Text = "Start automatically when I sign in to Windows",
+        AutoSize = true
+    };
     private readonly Label _errorLabel = new()
     {
         AutoSize = true,
@@ -26,7 +31,7 @@ internal sealed class SettingsForm : Form
         MaximizeBox = false;
         MinimizeBox = false;
         ShowInTaskbar = true;
-        ClientSize = new Size(480, 390);
+        ClientSize = new Size(480, 420);
 
         if (currentSettings is not null)
         {
@@ -35,13 +40,14 @@ internal sealed class SettingsForm : Form
             _userId.Text = currentSettings.DiscordUserId.ToString();
             _steamApiKey.Text = currentSettings.SteamApiKey;
             _steamId64.Text = currentSettings.SteamId64.ToString();
+            _startWithWindows.Checked = currentSettings.StartWithWindows;
         }
 
         var fields = new TableLayoutPanel
         {
             Dock = DockStyle.Fill,
             ColumnCount = 2,
-            RowCount = 10,
+            RowCount = 11,
             Padding = new Padding(12),
             AutoSize = false
         };
@@ -51,6 +57,7 @@ internal sealed class SettingsForm : Form
         {
             fields.RowStyles.Add(new RowStyle(SizeType.Percent, 20));
         }
+        fields.RowStyles.Add(new RowStyle(SizeType.Absolute, 28));
         fields.RowStyles.Add(new RowStyle(SizeType.Absolute, 24));
         fields.RowStyles.Add(new RowStyle(SizeType.Absolute, 24));
         fields.RowStyles.Add(new RowStyle(SizeType.Absolute, 24));
@@ -62,14 +69,16 @@ internal sealed class SettingsForm : Form
         AddField(fields, 2, "Target Discord User ID", _userId);
         AddField(fields, 3, "Steam Web API Key", _steamApiKey);
         AddField(fields, 4, "SteamID64", _steamId64);
+        fields.Controls.Add(_startWithWindows, 0, 5);
+        fields.SetColumnSpan(_startWithWindows, 2);
         fields.Controls.Add(CreateHelpLink(
             "Open Discord Developer Portal (Bot Token)",
-            "https://discord.com/developers/applications"), 0, 5);
-        fields.SetColumnSpan(fields.GetControlFromPosition(0, 5)!, 2);
+            "https://discord.com/developers/applications"), 0, 6);
+        fields.SetColumnSpan(fields.GetControlFromPosition(0, 6)!, 2);
         fields.Controls.Add(CreateHelpLink(
             "Open Steam Web API Key page",
-            "https://steamcommunity.com/dev/apikey"), 0, 6);
-        fields.SetColumnSpan(fields.GetControlFromPosition(0, 6)!, 2);
+            "https://steamcommunity.com/dev/apikey"), 0, 7);
+        fields.SetColumnSpan(fields.GetControlFromPosition(0, 7)!, 2);
         var instructionsLink = new LinkLabel
         {
             Text = "How to find these values",
@@ -81,9 +90,9 @@ internal sealed class SettingsForm : Form
             using var helpForm = new SettingsHelpForm();
             helpForm.ShowDialog(this);
         };
-        fields.Controls.Add(instructionsLink, 0, 7);
+        fields.Controls.Add(instructionsLink, 0, 8);
         fields.SetColumnSpan(instructionsLink, 2);
-        fields.Controls.Add(_errorLabel, 0, 8);
+        fields.Controls.Add(_errorLabel, 0, 9);
         fields.SetColumnSpan(_errorLabel, 2);
 
         var buttons = new FlowLayoutPanel
@@ -106,7 +115,7 @@ internal sealed class SettingsForm : Form
         };
         buttons.Controls.Add(saveButton);
         buttons.Controls.Add(cancelButton);
-        fields.Controls.Add(buttons, 0, 9);
+        fields.Controls.Add(buttons, 0, 10);
         fields.SetColumnSpan(buttons, 2);
 
         Controls.Add(fields);
@@ -165,7 +174,8 @@ internal sealed class SettingsForm : Form
                 _guildId.Text,
                 _userId.Text,
                 _steamApiKey.Text,
-                _steamId64.Text);
+                _steamId64.Text,
+                _startWithWindows.Checked);
             DialogResult = DialogResult.OK;
             Close();
         }
