@@ -2,6 +2,8 @@
 
 Windows の通知領域に Discord と Steam のステータスを表示する .NET 8 WinForms アプリです。メインフォームは表示せず、Discord は Bot Gateway、Steam は Web API で監視します。
 
+このプロジェクトのライセンスは [MIT License](./LICENSE) です。
+
 ## 事前準備
 
 1. .NET 8 SDK をインストールします。

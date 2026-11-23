@@ -4,6 +4,10 @@ Notable changes for each release are recorded here. Release headings use the ver
 
 ## [Unreleased]
 
+### Changed
+
+- Add the MIT License.
+
 ## [1.0.0] - 2026-11-23
 
 ### Added

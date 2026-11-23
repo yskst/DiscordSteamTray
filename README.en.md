@@ -2,6 +2,8 @@
 
 A .NET 8 Windows Forms application that displays Discord and Steam presence in the Windows notification area. It runs without a main window, monitors Discord through a bot account, and polls the Steam Web API.
 
+This project is licensed under the [MIT License](./LICENSE).
+
 ## Prerequisites and setup
 
 1. Install the .NET 8 SDK if you intend to build or run the project from source.
