@@ -37,6 +37,21 @@ dotnet publish .\DiscordSteamTray.csproj -c Release -r win-x64 --self-contained 
 
 GitHub Actions は `main` への push、`main` 向け Pull Request、または Actions タブからの手動実行で Windows x64 版を発行します。完了後、実行結果の Artifacts から `DiscordSteamTray-win-x64` をダウンロードできます。
 
+### GitHub Release の作成
+
+Release は `v1.2.3` のような SemVer タグを push したときだけ、Windows ビルド成功後に作成されます。Release ノートは [CHANGELOG.md](./CHANGELOG.md) の該当バージョンから取得し、発行した EXE を添付します。
+
+1. `CHANGELOG.md` の変更を `Unreleased` から `## [1.2.3] - YYYY-MM-DD` のようなバージョン見出しへ移動します（タグが `v1.2.3` なら見出しは `1.2.3`）。
+2. 変更を `main` に commit/push します。
+3. バージョンタグを push します。
+
+```powershell
+git tag v1.2.3
+git push origin v1.2.3
+```
+
+Pull Request、通常の `main` push、Actions タブからの手動実行はビルドのみで、Release は作成しません。
+
 Discord Bot Token と Steam API Key は Windows ユーザーごとに暗号化して保存します。同じ Windows ユーザーでログインしてアプリを実行してください。
 
 ## トラブルシューティング

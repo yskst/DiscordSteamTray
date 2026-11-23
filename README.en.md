@@ -39,6 +39,21 @@ Run `publish\DiscordSteamTray.exe` directly. The published executable is self-co
 
 GitHub Actions publishes the Windows x64 executable on pushes to `main`, pull requests targeting `main`, and manual runs from the Actions tab. After a successful run, download `DiscordSteamTray-win-x64` from the run's Artifacts section.
 
+### Creating a GitHub Release
+
+A release is created after a successful Windows build only when a SemVer tag such as `v1.2.3` is pushed. Release notes are taken from the matching section in [CHANGELOG.md](./CHANGELOG.md), and the published executable is attached.
+
+1. Move the release changes from `Unreleased` into a version heading such as `## [1.2.3] - YYYY-MM-DD` in `CHANGELOG.md` (tag `v1.2.3` maps to heading `1.2.3`).
+2. Commit and push the changelog update to `main`.
+3. Push the version tag:
+
+```powershell
+git tag v1.2.3
+git push origin v1.2.3
+```
+
+Pull requests, regular pushes to `main`, and manual workflow runs build the executable but do not create a release.
+
 ## Troubleshooting
 
 If `dotnet run` reports `No .NET SDKs were found`, install the **.NET 8 SDK for Windows x64** (the runtime alone is not sufficient). Open a new terminal and verify that `dotnet --list-sdks` lists an `8.0.xxx` SDK before running the command again. If you are using the published application, launch `publish\DiscordSteamTray.exe` directly instead of using `dotnet run`.
